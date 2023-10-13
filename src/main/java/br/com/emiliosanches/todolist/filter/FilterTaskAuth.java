@@ -24,6 +24,12 @@ public class FilterTaskAuth extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
     var authorizationHeader = request.getHeader("Authorization");
+
+    if (authorizationHeader == null) {
+      response.sendError(401);
+      return;
+    }
+  
     var basicToken = authorizationHeader.substring("Basic".length()).trim();
 
     byte[] authDecoded = Base64.getDecoder().decode(basicToken);
