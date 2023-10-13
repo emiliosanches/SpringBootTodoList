@@ -23,6 +23,15 @@ public class FilterTaskAuth extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
+    var servletPath = request.getServletPath();
+
+    if (!servletPath.endsWith("/")) servletPath += "/";
+
+    if (servletPath.equals("/users/")) {
+      filterChain.doFilter(request, response);
+      return;
+    }
+
     var authorizationHeader = request.getHeader("Authorization");
 
     if (authorizationHeader == null) {
@@ -54,6 +63,8 @@ public class FilterTaskAuth extends OncePerRequestFilter {
       response.sendError(401);
       return;
     }
+
+    request.setAttribute("userId", user.getId());
 
     filterChain.doFilter(request, response);
   }
