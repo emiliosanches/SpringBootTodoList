@@ -64,7 +64,11 @@ public class TaskController {
     var task = this.taskRepository.findById(taskId).orElse(null);
 
     if (task == null) {
-      return ResponseEntity.status(404).body("Tarefa não encontrada");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarefa não encontrada");
+    }
+
+    if (!task.getUserId().equals(request.getAttribute("userId"))) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("A tarefa informada não pertence ao usuário autenticado");
     }
 
     Utils.copyNonNullProperty(taskModel, task);
