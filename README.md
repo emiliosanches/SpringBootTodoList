@@ -22,11 +22,14 @@ A step by step guide that will tell you how to get the development environment u
 $ git clone https://github.com/emiliosanches/SpringBootTodoList.git
 $ cd SpringBootTodoList
 
-# Compile and start using maven CLI
+# Option 1: Compile and start using maven CLI
 $ mvn clean install
 $ java -jar ./target/todolist-1.0.0.jar   # JAR file name may change
 
-# Or start using your IDE tools
+# Option 2: Run in development mode using maven CLI
+$ mvn spring-boot:run
+
+# Option 3: Start using your IDE tools
 ```
 
 ## Usage
